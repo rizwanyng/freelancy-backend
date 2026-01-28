@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Client Portal - Public Invoice View
+Route::get('/portal/invoice/{id}', [\App\Http\Controllers\PublicInvoiceController::class, 'show'])->name('public.invoice');
+
+// Fallback login route for Filament/Auth middleware
+Route::get('/login', function () {
+    return redirect('/admin/login');
+})->name('login');
