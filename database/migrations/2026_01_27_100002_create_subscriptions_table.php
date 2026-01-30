@@ -11,7 +11,7 @@ return new class extends Migration
         if (Schema::hasTable('subscriptions')) { return; }
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade');
             $table->string('name');
             $table->decimal('amount', 10, 2);
             $table->string('currency', 3)->default('USD');
