@@ -42,3 +42,5 @@ Route::middleware('auth:sanctum')->group(function () {
     // AI Features
     Route::post('/ai/enhance-proposal', [\App\Http\Controllers\AiController::class, 'enhanceProposal']);
 });
+
+Route::post('/admin/notifications', [\App\Http\Controllers\AdminNotificationController::class, 'send']);

@@ -14,6 +14,7 @@ use App\Models\Lead;
 use App\Models\EmailThread;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\AdminNotification;
 
 class SyncController extends Controller
 {
@@ -56,7 +57,7 @@ class SyncController extends Controller
         try {
             // Process incoming clients
             foreach ($request->input('clients', []) as $data) {
-                $syncData = collect($data)->only(['name', 'email', 'phone', 'company', 'notes', 'updated_at'])->toArray();
+                $syncData = collect($data)->only(['name', 'email', 'phone', 'company', 'notes', 'updated_at'])->toArray();       
                 $client = Client::withTrashed()->updateOrCreate(['id' => $data['id']], array_merge($syncData, ['user_id' => $userId]));
                 if (!empty($data['is_deleted'])) $client->delete();
             }
@@ -135,15 +136,29 @@ class SyncController extends Controller
             // Fetch changes from server since last sync
             $serverChanges = $this->getServerChanges($userId, $lastSyncTimestamp);
 
+            // Fetch and Mark Notifications
+            $notifications = AdminNotification::where('user_id', $userId)
+                ->where('is_read', false)
+                ->get()
+                ->map(function($n) {
+                    $n->update(['is_read' => true]);
+                    return [
+                        'id' => $n->id,
+                        'title' => $n->title,
+                        'body' => $n->body,
+                    ];
+                });
+
             return response()->json([
                 'message' => 'Sync completed successfully',
-                'changes' => $serverChanges, // Changed 'data' to 'changes' to match Flutter code
-                'server_time' => now()->toIso8601String(), // Changed 'sync_timestamp' to 'server_time' to match Flutter code
+                'changes' => $serverChanges,
+                'notifications' => $notifications, 
+                'server_time' => now()->toIso8601String(),
             ]);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             \Log::error('Sync Error: ' . $e->getMessage(), [
                 'exception' => $e,
                 'user_id' => $userId,
@@ -152,7 +167,7 @@ class SyncController extends Controller
 
             return response()->json([
                 'message' => 'Sync failed',
-                'error' => $e->getMessage(), // Sending full error for debugging
+                'error' => $e->getMessage(),
                 'trace' => config('app.debug') ? $e->getTrace() : null
             ], 500);
         }
@@ -169,14 +184,14 @@ class SyncController extends Controller
     {
         $query = function ($model) use ($userId, $lastSyncTimestamp) {
             $query = $model::withTrashed()->where('user_id', $userId);
-            
+
             if ($lastSyncTimestamp && $lastSyncTimestamp !== '1970-01-01T00:00:00Z') {
                 $query->where(function ($q) use ($lastSyncTimestamp) {
                     $q->where('updated_at', '>', $lastSyncTimestamp)
                       ->orWhere('deleted_at', '>', $lastSyncTimestamp);
                 });
             }
-            
+
             return $query->get();
         };
 
