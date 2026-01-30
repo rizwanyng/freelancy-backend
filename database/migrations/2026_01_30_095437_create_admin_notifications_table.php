@@ -10,14 +10,11 @@ return new class extends Migration
     {
         Schema::create('admin_notifications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade');
             $table->string('title');
             $table->text('body');
             $table->boolean('is_read')->default(false);
             $table->timestamps();
-            
-            // Try adding index instead of full constraint to avoid errno 150
-            $table->index('user_id');
         });
     }
 
