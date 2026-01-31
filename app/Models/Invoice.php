@@ -21,18 +21,22 @@ class Invoice extends Model
         'client_name',
         'amount',
         'date',
+        'due_date',
         'status',
         'is_external',
         'currency',
         'is_gst_enabled',
         'gst_percentage',
         'description',
+        'uid',
+        'updated_at',
     ];
 
     protected $casts = [
         'amount' => 'decimal:2',
         'gst_percentage' => 'decimal:2',
         'date' => 'datetime',
+        'due_date' => 'datetime',
         'is_external' => 'boolean',
         'is_gst_enabled' => 'boolean',
     ];

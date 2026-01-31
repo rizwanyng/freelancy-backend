@@ -18,12 +18,15 @@ class Project extends Model
         'user_id',
         'client_id',
         'name',
+        'description',
         'client_name',
         'budget',
         'status',
         'deadline',
         'estimated_hours',
         'currency',
+        'uid',
+        'updated_at',
     ];
 
     protected $casts = [

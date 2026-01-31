@@ -21,6 +21,8 @@ class Client extends Model
         'phone',
         'company',
         'notes',
+        'uid',
+        'updated_at',
     ];
 
     public function user()

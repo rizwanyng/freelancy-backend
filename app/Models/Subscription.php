@@ -25,6 +25,7 @@ class Subscription extends Model
         'is_active',
         'notes',
         'uid',
+        'updated_at',
     ];
 
     protected $casts = [

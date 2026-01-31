@@ -18,6 +18,8 @@ class Note extends Model
         'user_id',
         'content',
         'color_index',
+        'uid',
+        'updated_at',
     ];
 
     public function user()

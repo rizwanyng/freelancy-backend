@@ -23,6 +23,7 @@ class Expense extends Model
         'category',
         'receipt_path',
         'currency',
+        'uid',
         'updated_at',
     ];
 

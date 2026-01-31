@@ -26,6 +26,7 @@ class Lead extends Model
         'notes',
         'last_contact_date',
         'uid',
+        'updated_at',
     ];
 
     protected $casts = [

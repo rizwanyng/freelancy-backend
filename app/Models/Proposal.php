@@ -24,6 +24,8 @@ class Proposal extends Model
         'status',
         'timeline',
         'style',
+        'uid',
+        'updated_at',
     ];
 
     protected $casts = [

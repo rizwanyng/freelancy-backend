@@ -29,6 +29,7 @@ class EmailThread extends Model
         'is_important',
         'labels',
         'uid',
+        'updated_at',
     ];
 
     protected $casts = [

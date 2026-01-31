@@ -18,12 +18,15 @@ class Task extends Model
         'user_id',
         'project_id',
         'title',
+        'description',
         'is_completed',
         'total_seconds',
         'is_running',
         'last_start_time',
         'daily_tracked',
         'status',
+        'uid',
+        'updated_at',
     ];
 
     protected $casts = [
