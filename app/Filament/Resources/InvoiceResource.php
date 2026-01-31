@@ -65,7 +65,8 @@ class InvoiceResource extends Resource
                     ->searchable()
                     ->color('primary'),
                 Tables\Columns\TextColumn::make('client_name')->searchable(),
-                Tables\Columns\TextColumn::make('amount')->money(fn($record) => $record->currency ?? 'USD'),
+                Tables\Columns\TextColumn::make('amount')
+                    ->formatStateUsing(fn ($state, $record) => '$' . number_format($state, 0)),
                 Tables\Columns\TextColumn::make('date')->date(),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([

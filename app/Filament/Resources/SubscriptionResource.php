@@ -58,7 +58,8 @@ class SubscriptionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')->searchable(),
                 Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('amount'),
+                Tables\Columns\TextColumn::make('amount')
+                    ->formatStateUsing(fn ($state) => '$' . number_format($state, 0)),
                 Tables\Columns\TextColumn::make('next_billing_date')->date(),
                 Tables\Columns\IconColumn::make('is_active')->boolean(),
             ])

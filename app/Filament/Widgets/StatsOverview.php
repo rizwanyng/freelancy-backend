@@ -17,7 +17,7 @@ class StatsOverview extends BaseWidget
         $totalProjects = Project::count();
 
         return [
-            Card::make('Total Revenue', '$' . number_format($totalRevenue, 2))
+            Card::make('Total Revenue', '$' . number_format($totalRevenue, 0))
                 ->description('Across all users')
                 ->descriptionIcon('heroicon-s-cash')
                 ->color('success'),

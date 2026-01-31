@@ -49,6 +49,9 @@ class LeadResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('source')
                     ->maxLength(255),
+                Forms\Components\TextInput::make('estimated_value')
+                    ->numeric()
+                    ->prefix('$'),
             ]);
     }
 
@@ -68,6 +71,8 @@ class LeadResource extends Resource
                         'danger' => 'lost',
                     ]),
                 Tables\Columns\TextColumn::make('source'),
+                Tables\Columns\TextColumn::make('estimated_value')
+                    ->formatStateUsing(fn ($state) => '$' . number_format($state, 0)),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status'),

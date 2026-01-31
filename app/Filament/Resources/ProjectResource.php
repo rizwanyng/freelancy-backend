@@ -60,7 +60,8 @@ class ProjectResource extends Resource
                     ->color('primary'),
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('client_name'),
-                Tables\Columns\TextColumn::make('budget')->money(fn($record) => $record->currency ?? 'USD'),
+                Tables\Columns\TextColumn::make('budget')
+                    ->formatStateUsing(fn ($state, $record) => '$' . number_format($state, 0)),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
                         'secondary' => 'Not Started',

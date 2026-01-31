@@ -27,7 +27,10 @@ class RecentActivity extends BaseWidget
         return [
             Tables\Columns\TextColumn::make('user.name')->label('Freelancer'),
             Tables\Columns\TextColumn::make('client_name')->label('Client'),
-            Tables\Columns\TextColumn::make('amount')->money('USD')->color('success')->weight('bold'),
+            Tables\Columns\TextColumn::make('amount')
+                ->formatStateUsing(fn ($state) => '$' . number_format($state, 0))
+                ->color('success')
+                ->weight('bold'),
             Tables\Columns\BadgeColumn::make('status')
                 ->colors([
                     'success' => 'Paid',
