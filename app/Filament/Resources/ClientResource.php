@@ -69,8 +69,8 @@ class ClientResource extends Resource
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        // This ensures you see data from ALL users, not just your own.
-        return parent::getEloquentQuery()->withoutGlobalScopes();
+        // This ensures you see data from ALL users, not just your own, and hides soft-deleted records.
+        return parent::getEloquentQuery()->withoutGlobalScopes()->withoutTrashed();
     }
 
     public static function getRelations(): array
