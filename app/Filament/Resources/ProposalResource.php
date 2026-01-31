@@ -95,7 +95,7 @@ class ProposalResource extends Resource
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        return parent::getEloquentQuery()->withoutGlobalScopes();
+        return parent::getEloquentQuery()->withoutGlobalScopes()->withoutTrashed();
     }
 
     public static function getPages(): array
