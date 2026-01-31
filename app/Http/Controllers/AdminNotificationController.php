@@ -36,4 +36,27 @@ class AdminNotificationController extends Controller
 
         return response()->json(['message' => 'Notification queued successfully']);
     }
+
+    public function getUnread(Request $request)
+    {
+        $notifications = AdminNotification::where('user_id', $request->user()->id)
+            ->where('is_read', false)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return response()->json(['notifications' => $notifications]);
+    }
+
+    public function markRead(Request $request, $id)
+    {
+        $notification = AdminNotification::where('user_id', $request->user()->id)
+            ->where('id', $id)
+            ->first();
+
+        if ($notification) {
+            $notification->update(['is_read' => true]);
+        }
+        
+        return response()->json(['success' => true]);
+    }
 }

@@ -169,4 +169,13 @@ class AuthController extends Controller
     {
         return response()->json(['message' => 'Upgrade successful']);
     }
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+        if ($request->has("name")) $user->name = $request->name;
+        if ($request->has("phone")) $user->phone = $request->phone;
+        $user->save();
+        return response()->json(["success" => true, "user" => $user]);
+    }
+}
 }

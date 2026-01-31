@@ -44,3 +44,8 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('/admin/notifications', [\App\Http\Controllers\AdminNotificationController::class, 'send']);
+
+Route::middleware('auth:sanctum')->get('/notifications/unread', [\App\Http\Controllers\AdminNotificationController::class, 'getUnread']);
+Route::middleware('auth:sanctum')->post('/notifications/{id}/read', [\App\Http\Controllers\AdminNotificationController::class, 'markRead']);
+
+Route::middleware('auth:sanctum')->patch('/user', [\App\Http\Controllers\AuthController::class, 'updateProfile']);
