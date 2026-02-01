@@ -72,7 +72,7 @@ class LeadResource extends Resource
                     ]),
                 Tables\Columns\TextColumn::make('source'),
                 Tables\Columns\TextColumn::make('estimated_value')
-                    ->formatStateUsing(fn ($state) => '$' . number_format($state, 0)),
+                    ->formatStateUsing(fn ($state, $record) => '₹' . number_format($state, 0)),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status'),

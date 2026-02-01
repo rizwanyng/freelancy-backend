@@ -66,7 +66,7 @@ class InvoiceResource extends Resource
                     ->color('primary'),
                 Tables\Columns\TextColumn::make('client_name')->searchable(),
                 Tables\Columns\TextColumn::make('amount')
-                    ->formatStateUsing(fn ($state, $record) => '$' . number_format($state, 0)),
+                    ->formatStateUsing(fn ($state, $record) => ($record->currency === 'INR' ? '₹' : '$') . number_format($state, 0)),
                 Tables\Columns\TextColumn::make('date')->date(),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([

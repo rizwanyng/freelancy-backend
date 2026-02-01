@@ -59,7 +59,7 @@ class SubscriptionResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')->searchable(),
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('amount')
-                    ->formatStateUsing(fn ($state) => '$' . number_format($state, 0)),
+                    ->formatStateUsing(fn ($state, $record) => ($record->currency === 'INR' ? '₹' : '$') . number_format($state, 0)),
                 Tables\Columns\TextColumn::make('next_billing_date')->date(),
                 Tables\Columns\IconColumn::make('is_active')->boolean(),
             ])

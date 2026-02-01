@@ -61,7 +61,7 @@ class ProjectResource extends Resource
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('client_name'),
                 Tables\Columns\TextColumn::make('budget')
-                    ->formatStateUsing(fn ($state, $record) => '$' . number_format($state, 0)),
+                    ->formatStateUsing(fn ($state, $record) => ($record->currency === 'INR' ? '₹' : '$') . number_format($state, 0)),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
                         'secondary' => 'Not Started',

@@ -64,7 +64,7 @@ class ProposalResource extends Resource
                 Tables\Columns\TextColumn::make('client_name')->searchable(),
                 Tables\Columns\TextColumn::make('project_title')->searchable(),
                 Tables\Columns\TextColumn::make('estimated_budget')
-                    ->formatStateUsing(fn ($state) => '$' . number_format($state, 0)),
+                    ->formatStateUsing(fn ($state, $record) => '$' . number_format($state, 0)),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
                         'secondary' => 'Draft',
